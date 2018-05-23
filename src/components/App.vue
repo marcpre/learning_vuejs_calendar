@@ -1,6 +1,9 @@
 <template>
     <div>
-        <div v-for="day in days">{{ day }}</div>
+        <div v-for="week in weeks">
+            Week
+            <div v-for="day in weeks">{{ day }}</div>
+        </div>
     </div>
 </template>
 <script>
@@ -46,6 +49,19 @@
                 }
 
                 return days;
+            },
+            weeks() {
+                let weeks = []
+                let week = []
+                
+                for(let day of this.days) {
+                    week.push(day)
+                    if(week.length === 7) {
+                        weeks.push(week)
+                        week = []
+                    }
+                }
+                return weeks
             }
         }
     }
