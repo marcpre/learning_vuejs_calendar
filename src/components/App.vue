@@ -19,13 +19,13 @@
 <script>
     import CalendarDay from './CalendarDay.vue'
     export default {
-        data() {
-            return {
-                month: 5,
-                year: 2018
-            };
-        },
         computed: {
+            month() {
+              return this.$store.state.currentMonth  
+            },
+            year() {
+              return this.$store.state.currentYear  
+            },
             days() {
 
                 // Generating all days in current month
