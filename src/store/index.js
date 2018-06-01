@@ -7,8 +7,8 @@ moment.tz.setDefault('UTC');
 
 export default new Vuex.Store({
     state: {
-        currentYear: 2017,
-        currentMonth: 2,
+        currentYear: 2018,
+        currentMonth: 6,
         eventFormPosX: 0,
         eventFormPosY: 0,
         eventFormActive: false,
