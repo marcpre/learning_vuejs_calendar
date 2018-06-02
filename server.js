@@ -14,6 +14,10 @@ app.get('/', (req, res) => {
 
 });
 
+app.post('/add_event', (req, res) => {
+  console.log("received")
+})
+
 const server = http.createServer(app);
 
 if (process.env.NODE_ENV === 'development') {
@@ -22,7 +26,7 @@ if (process.env.NODE_ENV === 'development') {
   require('./webpack-dev-middleware').init(app);
 }
 
-server.listen(process.env.PORT, function () {
+server.listen(process.env.PORT, function() {
   console.log(`Example app listening on port localhost:${process.env.PORT}!`);
   if (process.env.NODE_ENV === 'development') {
     require("open")(`http://localhost:${process.env.PORT}`);
