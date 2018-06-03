@@ -15,9 +15,9 @@ export default new Vuex.Store({
         eventFormPosY: 0,
         eventFormActive: false,
         events: [
-            { description: 'Random event 1', date: moment('2017-02-06', 'YYYY-MM-DD') },
-            { description: 'Random event 2', date: moment('2017-02-15', 'YYYY-MM-DD') },
-            { description: 'Random event 3', date: moment('2017-03-14', 'YYYY-MM-DD') }
+            { description: 'Random event 1', date: moment('2018-06-06', 'YYYY-MM-DD') },
+            { description: 'Random event 2', date: moment('2018-06-15', 'YYYY-MM-DD') },
+            { description: 'Random event 3', date: moment('2018-06-21', 'YYYY-MM-DD') }
         ],
         eventFormDate: moment()
     },
@@ -45,12 +45,21 @@ export default new Vuex.Store({
     },
     actions: {
         addEvent(context, payload) {
-            let obj = {
-                description: payload,
-                date: context.state.eventFormDate
-            }
-            context.commit('addEvent', obj)
-            Axios.post('/add_event', obj)
+            return new Promise((resolve, reject) => {
+                let obj = {
+                    description: payload,
+                    date: context.state.eventFormDate
+                }
+                Axios.post('/add_event', obj).then(response => {
+                    if (response.status === 200) {
+                        context.commit('addEvent', obj)
+                        resolve()
+                    }
+                    else {
+                        reject();
+                    }
+                })
+            })
         }
     }
 });
