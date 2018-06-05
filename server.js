@@ -19,7 +19,7 @@ let events = [
 app.get('/', (req, res) => {
   let template = fs.readFileSync(path.resolve('./index.html'), 'utf-8');
   let contentMarker = '<!--APP-->'
-  res.send(template.replace(contentMarker, `<script>var __INITIAL_STATE__ = ${serialize(events)}<script>`));
+  res.send(template.replace(contentMarker, `<script>var __INITIAL_STATE__ = ${serialize(events)}</script>`));
 
 });
 
