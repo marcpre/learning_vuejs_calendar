@@ -12,15 +12,14 @@ const serialize = require('serialize-javascript')
 app.use('/public', express.static(path.join(__dirname, 'public')));
 
 let events = [
-    { description: 'Random event 1', date: moment('2018-06-06', 'YYYY-MM-DD') },
-    { description: 'Random event 2', date: moment('2018-06-15', 'YYYY-MM-DD') },
-    { description: 'Random event 3', date: moment('2018-06-21', 'YYYY-MM-DD') }
-  ]
+  { description: 'Random event 1', date: moment('2018-06-06', 'YYYY-MM-DD') },
+  { description: 'Random event 2', date: moment('2018-06-15', 'YYYY-MM-DD') },
+  { description: 'Random event 3', date: moment('2018-06-21', 'YYYY-MM-DD') }
+]
 app.get('/', (req, res) => {
   let template = fs.readFileSync(path.resolve('./index.html'), 'utf-8');
   let contentMarker = '<!--APP-->'
   res.send(template.replace(contentMarker, `<script>var __INITIAL_STATE__ = ${serialize(events)}</script>`));
-
 });
 
 app.use(require("body-parser").json())
