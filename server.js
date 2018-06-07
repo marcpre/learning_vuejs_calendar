@@ -19,6 +19,12 @@ let events = [
 
 let renderer
 
+if (process.env.NODE_ENV === 'production') {
+  let bundle = fs.readFileSync('./dist/node.bundle.js', 'utf8')
+  renderer = require('vue-server-renderer').createBundleRenderer(bundle)
+  app.use('/dist', express.static(path.join(__dirname, 'dist')))
+}
+
 app.get('/', (req, res) => {
   let template = fs.readFileSync(path.resolve('./index.html'), 'utf-8');
   let contentMarker = '<!--APP-->'
@@ -26,11 +32,13 @@ app.get('/', (req, res) => {
     renderer.renderToString({ events }, (err, html) => {
       if (err) {
         console.log(err)
-      } else {
+      }
+      else {
         res.send(template.replace(contentMarker, `<script>var __INITIAL_STATE__ = ${serialize(events)}</script>\n${html}`));
       }
     })
-  } else {
+  }
+  else {
     res.send('<p>Awaiting compilation...</p><script src="/reload/reload.js"></script>')
   }
 });
@@ -48,11 +56,11 @@ if (process.env.NODE_ENV === 'development') {
   const reloadServer = reload(server, app);
   require('./webpack-dev-middleware').init(app);
   require('./webpack-server-compiler').init((bundle) => {
-    let needsReload = ( renderer === undefined )
+    let needsReload = (renderer === undefined)
     renderer = require('vue-server-renderer').createBundleRenderer(bundle)
-if(needsReload) {
-  reloadServer.reload()
-}
+    if (needsReload) {
+      reloadServer.reload()
+    }
   });
 }
 
